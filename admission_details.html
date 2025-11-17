@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admission Details</title>
+
+<style>
+    body {
+        background-color: #0f1d1d;
+        font-family: Arial, sans-serif;
+        color: white;
+        margin: 0;
+        padding: 0;
+    }
+
+    .header {
+        background-color: #0b3939;
+        padding: 18px 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 2px solid #1fa7a7;
+    }
+
+    .hospital-name {
+        font-size: 22px;
+        font-weight: bold;
+    }
+
+    .menu {
+        position: relative;
+        cursor: pointer;
+        font-size: 24px;
+    }
+
+    .dropdown {
+        display: none;
+        position: absolute;
+        right: 0;
+        background-color: #145656;
+        min-width: 150px;
+        border-radius: 5px;
+        overflow: hidden;
+    }
+
+    .dropdown a {
+        color: white;
+        padding: 10px;
+        display: block;
+        text-decoration: none;
+        border-bottom: 1px solid #0d3c3c;
+    }
+
+    .dropdown a:hover {
+        background-color: #1fa7a7;
+    }
+
+    .menu:hover .dropdown {
+        display: block;
+    }
+
+    .title {
+        text-align: center;
+        margin-top: 30px;
+        font-size: 32px;
+        font-weight: bold;
+        color: #35f5f5;
+    }
+
+    .table-container {
+        width: 85%;
+        margin: 40px auto;
+        border: 2px solid #1fa7a7;
+        border-radius: 10px;
+        padding: 20px;
+        background-color: #102727;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+        color: #e7ffff;
+        font-size: 18px;
+    }
+
+    th {
+        background-color: #1fa7a7;
+        padding: 12px;
+        font-weight: bold;
+        color: black;
+    }
+
+    td {
+        padding: 10px;
+        border-bottom: 1px solid #124d4d;
+    }
+
+    tr:hover {
+        background-color: #164949;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="header">
+    <div class="hospital-name">Hospital Name</div>
+
+    <!-- 3-Dots Menu -->
+    <div class="menu">⋮
+        <div class="dropdown">
+            <a href="#">Home</a>
+            <a href="#">Patients</a>
+            <a href="#">Doctors</a>
+            <a href="#">Rooms</a>
+        </div>
+    </div>
+</div>
+
+<div class="title">Admission Details</div>
+
+<div class="table-container">
+    <table>
+        <tr>
+            <th>Admission ID</th>
+            <th>Admission Date</th>
+            <th>Discharge Date</th>
+            <th>Diagnosis</th>
+            <th>Patient ID</th>
+            <th>Room ID</th>
+            <th>Doctor ID</th>
+        </tr>
+        {% for a in admissions %}
+        <tr>
+            <td>{{ a[0] }}</td>
+            <td>{{ a[1] }}</td>
+            <td>{{ a[2] }}</td>
+            <td>{{ a[3] }}</td>
+            <td>{{ a[4] }}</td>
+            <td>{{ a[5] }}</td>
+            <td>{{ a[6] }}</td>
+        </tr>
+        {% endfor %}
+
+    </table>
+</div>
+
+</body>
+</html>

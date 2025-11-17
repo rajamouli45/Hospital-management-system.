@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Queries - Apollo Hospitals</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+        .hospital-bg {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+                              url('https://raw.githubusercontent.com/k-praneeth567/dbmsimages/main/logo_make_11_06_2023_412.webp');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .query-card {
+            background-color: rgba(31, 41, 55, 0.8);
+            border: 2px solid #0E7490;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        .query-card:hover {
+            transform: translateY(-5px);
+            border-color: #06B6D4;
+            box-shadow: 0 12px 25px rgba(0, 255, 255, 0.25), 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .data-display {
+            background-color: #1F2937;
+            border-left: 4px solid #06B6D4;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+        }
+    </style>
+</head>
+<body class="hospital-bg min-h-screen flex flex-col text-white">
+
+    <header class="w-full p-4 md:p-6 bg-gray-900 bg-opacity-80 shadow-2xl sticky top-0 z-10 backdrop-blur-sm">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="text-xl font-extrabold text-cyan-300 tracking-wider">
+                ADMIN QUERIES PANEL
+            </div>
+
+            <div class="flex items-center space-x-6">
+                <a href="/" class="text-lg font-semibold hover:text-cyan-400 transition-colors">HOME</a>
+                <div class="w-10 h-10 bg-gray-700 border-2 border-cyan-400 rounded-full flex items-center justify-center cursor-pointer hover:ring-2 hover:ring-cyan-500 transition-all" title="User Profile">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-cyan-400">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 19.5a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow flex flex-col items-center justify-start pt-12 p-4 md:p-8">
+        <h1 class="text-4xl md:text-5xl font-extrabold text-cyan-200 mb-10 tracking-widest uppercase pb-3 border-b-4 border-cyan-500/50">
+            System Insights
+        </h1>
+
+        <div class="w-full max-w-7xl grid grid-cols-1 md:grid-cols-2 gap-8">
+
+            <!-- 1️⃣ Highest Average Salary Department -->
+            <div class="query-card p-6 rounded-xl">
+                <h2 class="text-xl font-semibold mb-4 text-cyan-300">
+                    <span class="text-2xl mr-2">💰</span> Department with Highest Avg Staff Salary
+                </h2>
+                <p class="text-gray-400 mb-4 text-sm italic">
+                    Displays the department with the highest average staff salary dynamically.
+                </p>
+                <div class="data-display p-4 rounded-lg">
+                    <div class="w-full flex justify-between items-center">
+                        <span class="text-lg font-medium text-gray-200">Top Department:</span>
+                        <strong id="highest-dept" class="text-3xl text-yellow-300 tracking-wider">Loading...</strong>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2️⃣ Low Stock Medicines -->
+            <div class="query-card p-6 rounded-xl">
+                <h2 class="text-xl font-semibold mb-4 text-cyan-300">
+                    <span class="text-2xl mr-2">💊</span> Low Stock Medicines
+                </h2>
+                <p class="text-gray-400 mb-4 text-sm italic">
+                    Shows medicines that have below-average stock levels.
+                </p>
+                <div class="data-display p-4 rounded-lg overflow-x-auto">
+                    <table class="w-full text-left text-sm text-gray-200">
+                        <thead class="text-xs uppercase text-cyan-400">
+                            <tr>
+                                <th class="py-1 pr-3">Medicine Name</th>
+                                <th class="py-1 text-right">Quantity</th>
+                            </tr>
+                        </thead>
+                        <tbody id="low-stock-body">
+                            <tr><td colspan="2" class="text-center text-gray-400 italic">Loading...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 3️⃣ High Patient Load Departments -->
+            <div class="query-card p-6 rounded-xl">
+                <h2 class="text-xl font-semibold mb-4 text-cyan-300">
+                    <span class="text-2xl mr-2">🩺</span> Departments with High Patient Load
+                </h2>
+                <p class="text-gray-400 mb-4 text-sm italic">
+                    Departments where doctors have higher than average patient loads.
+                </p>
+                <div class="data-display p-4 rounded-lg overflow-x-auto">
+                    <table class="w-full text-left text-sm text-gray-200">
+                        <thead class="text-xs uppercase text-cyan-400">
+                            <tr>
+                                <th class="py-1 pr-3">Department</th>
+                            </tr>
+                        </thead>
+                        <tbody id="high-load-body">
+                            <tr><td class="text-center text-gray-400 italic">Loading...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 4️⃣ Doctors with Only Scheduled Appointments -->
+            <div class="query-card p-6 rounded-xl">
+                <h2 class="text-xl font-semibold mb-4 text-cyan-300">
+                    <span class="text-2xl mr-2">📅</span> Doctors with Only Scheduled Appointments
+                </h2>
+                <p class="text-gray-400 mb-4 text-sm italic">
+                    Doctors who currently have only 'Scheduled' appointments and no 'Completed' ones.
+                </p>
+                <div class="data-display p-4 rounded-lg overflow-x-auto">
+                    <ul id="scheduled-only-list" class="list-disc list-inside space-y-1 text-left w-full">
+                        <li class="text-gray-400 italic">Loading...</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- JS: Fetch Data Dynamically -->
+    <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        fetch("/system_insights_data")
+            .then(response => response.json())
+            .then(data => {
+                if (!data.success) {
+                    console.error("Error fetching system insights:", data.message);
+                    return;
+                }
+
+                // 1️⃣ Highest Avg Salary Department
+                const highestDept = data.highest_avg_salary_dept
+                    ? data.highest_avg_salary_dept.DeptName
+                    : "No data found";
+                document.getElementById("highest-dept").textContent = highestDept;
+
+                // 2️⃣ Low Stock Medicines
+                const lowStockBody = document.getElementById("low-stock-body");
+                lowStockBody.innerHTML = "";
+                if (data.low_stock_meds.length === 0) {
+                    lowStockBody.innerHTML = `<tr><td colspan="2" class="text-center text-gray-400 italic">No low stock medicines</td></tr>`;
+                } else {
+                    data.low_stock_meds.forEach(med => {
+                        lowStockBody.innerHTML += `
+                            <tr class="border-b border-gray-700/50">
+                                <td class="py-1 pr-3 font-medium">${med.MedicineName}</td>
+                                <td class="py-1 text-right text-red-400">${med.StockQuantity}</td>
+                            </tr>`;
+                    });
+                }
+
+                // 3️⃣ Departments with High Patient Loads
+                const deptBody = document.getElementById("high-load-body");
+                deptBody.innerHTML = "";
+                if (data.high_load_depts.length === 0) {
+                    deptBody.innerHTML = `<tr><td class="text-center text-gray-400 italic">No high-load departments</td></tr>`;
+                } else {
+                    data.high_load_depts.forEach(dep => {
+                        deptBody.innerHTML += `
+                            <tr class="border-b border-gray-700/50">
+                                <td class="py-1 font-medium">${dep.DeptName}</td>
+                            </tr>`;
+                    });
+                }
+
+                // 4️⃣ Doctors with Only Scheduled Appointments
+                const doctorList = document.getElementById("scheduled-only-list");
+                doctorList.innerHTML = "";
+                if (data.scheduled_only_doctors.length === 0) {
+                    doctorList.innerHTML = `<li class="text-gray-400 italic">No doctors with only scheduled appointments</li>`;
+                } else {
+                    data.scheduled_only_doctors.forEach(doc => {
+                        doctorList.innerHTML += `<li class="font-medium">${doc.Name} (${doc.DoctorID})</li>`;
+                    });
+                }
+            })
+            .catch(err => console.error("❌ Fetch error:", err));
+    });
+    </script>
+
+    <footer class="w-full p-3 bg-gray-900 bg-opacity-80 text-center text-sm text-gray-500 mt-auto">
+        &copy; 2025 Apollo Hospitals Management System. All Rights Reserved.
+    </footer>
+
+</body>
+</html>

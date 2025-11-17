@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Patient Profile</title>
+
+<style>
+    body {
+        background-color: #0f1d1d;
+        font-family: Arial, sans-serif;
+        color: #e8ffff;
+        margin: 0;
+        padding: 0;
+    }
+
+    
+    .top-header {
+        background-color: #0b3939;
+        padding: 18px 40px;
+        border-bottom: 2px solid #1fa7a7;
+        color: #e8ffff;
+        font-size: 22px;
+        font-weight: bold;
+    }
+
+    .profile-container {
+        width: 92%;
+        margin: 40px auto;
+        border: 2px solid #1fa7a7;
+        border-radius: 12px;
+        background-color: #102727;
+        box-shadow: 0 0 18px #0d3c3c;
+        padding-bottom: 40px;
+    }
+
+    .section-header {
+        padding: 18px;
+        border-bottom: 2px solid #1fa7a7;
+        font-size: 24px;
+        font-weight: bold;
+        text-align: left;
+    }
+
+   
+    .input-row {
+        margin: 25px 40px;
+        font-size: 17px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .input-row input {
+        padding: 9px;
+        background-color: #0f1d1d;
+        border: 1.8px solid #1fa7a7;
+        border-radius: 6px;
+        color: #e8ffff;
+        width: 170px;
+    }
+
+    .view-btn {
+        padding: 7px 14px;
+        background-color: #1fa7a7;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: bold;
+        color: black;
+        transition: 0.3s;
+    }
+    .view-btn:hover { background-color: #35f5f5; transform: scale(1.05); }
+
+    
+    .content {
+        display: flex;
+        gap: 70px;
+        padding: 20px 50px 40px 50px;
+    }
+
+  
+    .photo-section {
+        text-align: center;
+        min-width: 150px; 
+        display: flex;
+        flex-direction: column;
+        align-items: center; 
+    }
+
+    .profile-pic {
+        width: 150px;
+        height: 150px;
+        border: 3px solid #1fa7a7;
+        border-radius: 50%;
+        background-image: url('https://raw.githubusercontent.com/k-praneeth567/dbmsimages/main/Screenshot%202025-11-08%20211008.webp');
+        background-size: cover;
+        background-position: center;
+        margin-bottom: 8px;
+        flex: 0 0 auto;
+    }
+
+    .patient-name-tag {
+        color: white;
+        font-size: 18px;
+        font-weight: bold;
+        text-align: center;
+        margin: 0;               
+        width: 100%;            
+        max-width: 160px;
+        word-break: break-word;
+    }
+
+
+    .details {
+        font-size: 18px;
+        line-height: 36px;
+        display: grid;
+        grid-template-columns: 220px auto 220px auto;
+        column-gap: 70px;
+        row-gap: 18px;
+    }
+
+    .details span {
+        font-weight: bold;
+        color: #35f5f5;
+    }
+
+</style>
+</head>
+<body>
+
+
+<div class="top-header">HOSPITAL SYSTEM</div>
+
+<div class="profile-container">
+
+    <div class="section-header">PATIENT PROFILE</div>
+
+
+    <div class="input-row">
+        <label>Enter Patient ID:</label>
+        <input type="text" id="patientIdInput" placeholder="P24001" pattern="P24[0-9]{3}">
+        <button class="view-btn" onclick="viewProfile()">View</button>
+    </div>
+
+    <div class="content">
+
+
+        <div class="photo-section">
+            <div class="profile-pic"></div>
+            <div class="patient-name-tag" id="patientName">Name</div>
+        </div>
+
+        
+        <div class="details">
+            <span>Patient ID:</span> <div id="p_id">----</div>
+            <span>Gender:</span> <div id="gender">----</div>
+
+            <span>DOB:</span> <div id="dob">----</div>
+            <span>Phone:</span> <div id="phone">----</div>
+
+            <span>Email:</span> <div id="email">----</div>
+            <span>Blood Group:</span> <div id="blood">----</div>
+
+            <span>Admission Date:</span> <div id="admDate">----</div>
+            <span>Emergency Contact:</span> <div id="emg">----</div>
+
+            <span>Consulting Doctor:</span> <div id="doctor">----</div>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+    async function viewProfile() {
+        let pid = document.getElementById("patientIdInput").value.trim();
+
+        if (!/^P24[0-9]{3}$/.test(pid)) {
+            alert("⚠️ Patient ID must be in format P24xxx (Example: P24015)");
+            return;
+        }
+
+        try {
+            const response = await fetch("/get_patient_profile", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ patient_id: pid })
+            });
+
+            const result = await response.json();
+            if (!result.success) {
+                alert(result.message || "No data found for this patient.");
+                return;
+            }
+
+            const p = result.patient;
+
+            // ✅ Fill data into the profile fields
+            document.getElementById("patientName").textContent = p.Name || "Unknown";
+            document.getElementById("p_id").textContent = p.PatientID || "----";
+            document.getElementById("gender").textContent = p.Gender || "----";
+            document.getElementById("dob").textContent = p.DOB || "----";
+            document.getElementById("phone").textContent = p.Phone || "----";
+            document.getElementById("email").textContent = p.Email || "----";
+            document.getElementById("blood").textContent = p.BloodGroup || "----";
+            document.getElementById("admDate").textContent = p.AdmissionDate || "----";
+            document.getElementById("emg").textContent = p.EmergencyContact || "----";
+            document.getElementById("doctor").textContent = p.doctor_DoctorID || "----";
+
+        } catch (error) {
+            console.error("❌ Error fetching profile:", error);
+            alert("Failed to connect to server. Please try again.");
+        }
+    }
+</script>
+
+
+</body>
+</html>

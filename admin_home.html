@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apollo Hospitals Management System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+        .hospital-bg {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+                              url('https://raw.githubusercontent.com/k-praneeth567/dbmsimages/main/hospital-2827005_1280.webp');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% {
+                text-shadow: 0 0 8px rgba(0, 255, 255, 0.4),
+                             0 0 16px rgba(0, 255, 255, 0.4);
+                transform: scale(1);
+                opacity: 0.9;
+            }
+            50% {
+                text-shadow: 0 0 20px rgba(0, 255, 255, 0.8),
+                             0 0 40px rgba(0, 255, 255, 0.6);
+                transform: scale(1.01);
+                opacity: 1;
+            }
+        }
+
+        .animated-title {
+            font-family: 'Inter', sans-serif;
+            animation: pulse-glow 4s infinite ease-in-out;
+            will-change: transform, text-shadow;
+        }
+
+        .action-link {
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-decoration: none;
+        }
+
+        .action-link:hover {
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 10px 15px rgba(0, 255, 255, 0.3), 0 4px 6px rgba(0, 0, 0, 0.1);
+            background-color: #008cba;
+        }
+    </style>
+</head>
+<body class="hospital-bg min-h-screen flex flex-col text-white font-[Inter]">
+
+    <!-- Header -->
+    <header class="w-full p-4 md:p-6 bg-gray-900 bg-opacity-80 shadow-2xl backdrop-blur-sm sticky top-0 z-10">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="text-xl font-extrabold text-cyan-300 tracking-wider">
+                ADMIN PANEL
+            </div>
+
+            <div class="flex items-center space-x-6">
+                <a href="/" class="text-lg font-semibold hover:text-cyan-400 transition-colors">HOME</a>
+                <div class="w-10 h-10 bg-gray-700 border-2 border-cyan-400 rounded-full flex items-center justify-center cursor-pointer hover:ring-2 hover:ring-cyan-500 transition-all" title="User Profile">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-cyan-400">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 19.5a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main -->
+    <main class="flex-grow flex flex-col items-center justify-center p-4 md:p-8">
+        <div class="text-center mb-10">
+            <h1 class="animated-title text-4xl sm:text-6xl lg:text-7xl font-black uppercase tracking-widest text-white">
+                APOLLO HOSPITALS
+            </h1>
+        </div>
+
+        <div class="w-full max-w-6xl bg-gray-900 bg-opacity-70 p-6 md:p-10 rounded-xl shadow-3xl backdrop-blur-sm border border-cyan-800">
+            <h2 class="text-xl md:text-2xl font-light text-center text-gray-200 mb-8 pb-4 border-b border-cyan-700 tracking-wider">
+                VIEW DETAILS OF :
+            </h2>
+
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6 button-grid">
+                <script>
+                    // ✅ List of buttons (added "System Insights" at the end)
+                    const buttons = [
+                        "Patient", "Doctor", "All Staff", "Appointment", "Medicine",
+                        "Room", "Admissions", "Bill", "Department", "Prescription",
+                        "Past Appointments", "System Insights" // ✅ NEW BUTTON
+                    ];
+
+                    // ✅ Corresponding Flask route links (added route for system insights)
+                    const routes = {
+                        "Patient": "/patients",
+                        "Doctor": "/doctors",
+                        "All Staff": "/staff",
+                        "Appointment": "/appointments",
+                        "Medicine": "/medicines",
+                        "Room": "/rooms",
+                        "Admissions": "/admissions",
+                        "Bill": "/bills",
+                        "Department": "/departments",
+                        "Prescription": "/prescriptions",
+                        "Past Appointments": "/past_appointments",
+                        "System Insights": "/system_insights" // ✅ NEW ROUTE
+                    };
+
+                    // ✅ Added an icon for "System Insights" (analytics/dashboard style)
+                    const icons = {
+                        "Patient": "M5 3.5a2.5 2.5 0 1 0 0 5...",
+                        "Doctor": "M12 4a4 4 0 1 0 0 8...",
+                        "All Staff": "M20.25 7.75a.75.75...",
+                        "Appointment": "M17.5 4a.5.5 0 0 1 .5.5v2h-13v-2...",
+                        "Medicine": "M12 4a.5.5 0 0 0-.5.5v5.5H6.5...",
+                        "Room": "M3 3h18a1 1 0 0 1 1 1v16a1 1...",
+                        "Admissions": "M15.5 7a.5.5 0 0 0-.5.5v9a.5.5...",
+                        "Bill": "M7.5 4a.5.5 0 0 0-.5.5v15a.5.5...",
+                        "Department": "M10 2a.5.5 0 0 0-.5.5V5H4a1 1...",
+                        "Prescription": "M12 2a.5.5 0 0 0-.5.5V5H8.5a.5...",
+                        "Past Appointments": "M4 4h16v2H4V4zm0 6h16v2H4v-2zm0 6h10v2H4v-2z",
+                        "System Insights": "M3 3h2v18H3V3zm8 6h2v12h-2V9zm8-4h2v16h-2V5z" // ✅ bar chart icon
+                    };
+
+                    const container = document.querySelector('.button-grid');
+
+                    // ✅ Generate all buttons dynamically
+                    buttons.forEach(text => {
+                        const path = icons[text] || "";
+                        const link = routes[text] || "#";
+                        const linkHtml = `
+                            <a href="${link}" 
+                            class="action-link flex flex-col items-center justify-center p-4 rounded-lg bg-cyan-600 hover:bg-cyan-700 text-white font-semibold text-sm sm:text-base transition-all duration-300 transform shadow-lg hover:shadow-cyan-500/50 cursor-pointer text-center">
+                                <svg class="w-8 h-8 sm:w-10 sm:h-10 mb-2" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="${path}" />
+                                </svg>
+                                ${text}
+                            </a>
+                        `;
+                        container.insertAdjacentHTML('beforeend', linkHtml);
+                    });
+                </script>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full p-3 bg-gray-900 bg-opacity-80 text-center text-sm text-gray-500 mt-auto">
+        &copy; 2025 Apollo Hospitals Management System. All Rights Reserved.
+    </footer>
+
+</body>
+</html>

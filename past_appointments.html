@@ -1,0 +1,179 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Past Appointments - Apollo Hospitals</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+        .hospital-bg {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+                              url('https://raw.githubusercontent.com/k-praneeth567/dbmsimages/main/pexels-cristian-rojas-8459996.webp');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        /* No animated title on this page, but keeping Inter font */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Custom styles for input and search button */
+        .input-field {
+            background-color: rgba(31, 41, 55, 0.7); /* gray-800 with opacity */
+            border: 1px solid #06B6D4; /* cyan-500 */
+            color: #E2E8F0; /* gray-200 */
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem; /* rounded-lg */
+            transition: all 0.2s ease-in-out;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: #00BCD4; /* A brighter cyan */
+            box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.5); /* cyan-500 with opacity */
+        }
+
+        .search-button {
+            background-color: #06B6D4; /* cyan-500 */
+            color: white;
+            font-weight: 600; /* semibold */
+            padding: 0.75rem 2rem;
+            border-radius: 0.5rem; /* rounded-lg */
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-button:hover {
+            background-color: #0891B2; /* cyan-600 */
+            transform: translateY(-2px);
+            box-shadow: 0 8px 12px rgba(0, 255, 255, 0.3), 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Style for the results box */
+        .results-box {
+            background-color: rgba(31, 41, 55, 0.7); /* gray-800 with opacity */
+            border: 1px solid #0E7490; /* cyan-700 */
+            color: #E2E8F0; /* gray-200 */
+            padding: 2rem;
+            border-radius: 0.75rem; /* rounded-xl */
+            min-height: 200px; /* give it some height */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 1.125rem; /* text-lg */
+            line-height: 1.75rem; /* leading-relaxed */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body class="hospital-bg min-h-screen flex flex-col text-white">
+
+    <header class="w-full p-4 md:p-6 bg-gray-900 bg-opacity-80 shadow-2xl backdrop-blur-sm sticky top-0 z-10">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="text-xl font-extrabold text-cyan-300 tracking-wider">
+                APPOINTMENT DETAILS
+            </div>
+
+            <div class="flex items-center space-x-6">
+                <a href="index.html" class="text-lg font-semibold hover:text-cyan-400 transition-colors">HOME</a>
+                <div class="w-10 h-10 bg-gray-700 border-2 border-cyan-400 rounded-full flex items-center justify-center cursor-pointer hover:ring-2 hover:ring-cyan-500 transition-all" title="User Profile">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-cyan-400">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 19.5a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow flex flex-col items-center justify-center p-4 md:p-8">
+
+        <div class="w-full max-w-2xl bg-gray-900 bg-opacity-70 p-6 md:p-10 rounded-xl shadow-3xl backdrop-blur-sm border border-cyan-800">
+            
+            <h2 class="text-2xl md:text-3xl font-bold text-center text-cyan-300 mb-8 pb-4 border-b border-cyan-700 tracking-wide">
+                VIEW MY PAST APPOINTMENTS
+            </h2>
+
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-10">
+                <label for="patientId" class="text-lg font-medium text-gray-200">Enter your Patient ID :</label>
+                <input type="text" id="patientId" name="patientId" placeholder="e.g., P001" class="input-field flex-grow max-w-xs">
+                <button type="button" class="search-button">Search</button>
+            </div>
+
+            <div class="results-box mt-8">
+                <p>SHOWS ALL THE PREVIOUS APPOINTMENT OF THE PATIENT</p>
+            </div>
+        </div>
+    </main>
+    
+    <footer class="w-full p-3 bg-gray-900 bg-opacity-80 text-center text-sm text-gray-500 mt-auto">
+        &copy; 2025 Apollo Hospitals Management System. All Rights Reserved.
+    </footer>
+    <script>
+document.querySelector('.search-button').addEventListener('click', function() {
+    const patientId = document.getElementById('patientId').value.trim();
+    const resultsBox = document.querySelector('.results-box');
+
+    if (!patientId) {
+        resultsBox.innerHTML = '<p class="text-red-400">⚠️ Please enter your Patient ID.</p>';
+        return;
+    }
+
+    resultsBox.innerHTML = '<p class="animate-pulse text-cyan-300">🔍 Fetching appointments...</p>';
+
+    fetch('/get_past_appointments', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ patientId })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (!data.success) {
+            resultsBox.innerHTML = `<p class="text-red-400">${data.message}</p>`;
+        } else {
+            const appointments = data.appointments;
+            let tableHTML = `
+                <table class="w-full text-left border-collapse text-gray-200">
+                    <thead class="bg-cyan-700 text-white">
+                        <tr>
+                            <th class="p-3 border border-cyan-500">Appointment ID</th>
+                            <th class="p-3 border border-cyan-500">Patient ID</th>
+                            <th class="p-3 border border-cyan-500">Doctor ID</th>
+                            <th class="p-3 border border-cyan-500">Date</th>
+                            <th class="p-3 border border-cyan-500">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-gray-800 bg-opacity-80">
+            `;
+
+            appointments.forEach(app => {
+                tableHTML += `
+                    <tr class="hover:bg-cyan-900 transition">
+                        <td class="p-3 border border-cyan-700">${app.appointment_id}</td>
+                        <td class="p-3 border border-cyan-700">${app.patient_id}</td>
+                        <td class="p-3 border border-cyan-700">${app.doctor_id}</td>
+                        <td class="p-3 border border-cyan-700">${app.appointment_date}</td>
+                        <td class="p-3 border border-cyan-700">${app.status}</td>
+                    </tr>
+                `;
+            });
+
+            tableHTML += '</tbody></table>';
+            resultsBox.innerHTML = tableHTML;
+        }
+    })
+    .catch(err => {
+        console.error(err);
+        resultsBox.innerHTML = '<p class="text-red-500">❌ Error fetching data. Please try again later.</p>';
+    });
+});
+</script>
+
+
+</body>
+</html>

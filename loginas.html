@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login As - Apollo Hospital</title>
+
+<style>
+    body {
+        background-color: #0f1d1d;
+        font-family: Arial, sans-serif;
+        color: #e8ffff;
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* --- Header --- */
+    .header {
+        background-color: #0b3939;
+        color: #35f5f5;
+        font-size: 26px;
+        font-weight: bold;
+        padding: 18px 40px;
+        border-bottom: 2px solid #1fa7a7;
+        letter-spacing: 2px;
+        text-shadow: 0px 0px 6px #00f0f0;
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    /* --- Home Button --- */
+    .home-btn {
+        padding: 10px 18px;
+        background-color: #1fa7a7;
+        border: none;
+        border-radius: 6px;
+        color: black;
+        font-size: 14px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.3s ease;
+        text-decoration: none;
+    }
+
+    .home-btn:hover {
+        background-color: #35f5f5;
+        transform: scale(1.05);
+        box-shadow: 0px 0px 8px #1fa7a7;
+    }
+
+    /* --- Outer Login Box --- */
+    .outer-box {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .login-container {
+        border: 2px solid #1fa7a7;
+        background-color: #102727;
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0 0 25px #0d3c3c;
+        text-align: center;
+        width: 250px;
+    }
+
+    .login-container h2 {
+        margin-bottom: 25px;
+        color: #35f5f5;
+        font-size: 22px;
+    }
+
+    /* --- Login Buttons --- */
+    .login-btn {
+        display: block;
+        width: 100%;
+        padding: 10px 0;
+        margin: 10px 0;
+        border: 1.5px solid #1fa7a7;
+        border-radius: 8px;
+        background-color: transparent;
+        color: #e8ffff;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.3s ease;
+    }
+
+    .login-btn:hover {
+        background-color: #1fa7a7;
+        color: black;
+        transform: scale(1.07);
+        box-shadow: 0 0 10px #1fa7a7;
+    }
+
+    /* --- Responsive --- */
+    @media (max-width: 500px) {
+        .login-container {
+            width: 80%;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+    <!-- Header with Back Button -->
+    <div class="header">
+        APOLLO HOSPITAL
+        <a href="/"><button class="home-btn">🏠 Home</button></a>
+    </div>
+
+    <!-- Login Options -->
+    <div class="outer-box">
+        <div class="login-container">
+            <h2>Login As:</h2>
+            <a href="/patientlogin"><button class="login-btn">Patient</button></a>
+            <a href="/doctorlogin"><button class="login-btn">Doctor</button></a>
+            <a href="/adminlogin"><button class="login-btn">Admin</button></a>
+        </div>
+    </div>
+
+</body>
+</html>
